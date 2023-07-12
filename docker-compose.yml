@@ -1,0 +1,35 @@
+version: "3.7"
+
+networks:
+    database:
+        driver: "bridge"
+        
+services:
+  
+    #DB Mariadb
+    mariadb:
+        image: mariadb:latest
+        restart: unless-stopped
+        environment: 
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        command: --default-authentication-plugin=mysql_native_password
+        ports: 
+            - 3306:3306
+        networks: 
+            - database
+
+    #PHPMYADMIN Service
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin:latest
+      environment:
+          PMA_HOST: mariadb
+          PMA_USER: ${DB_USERNAME}
+          PMA_PASSWORD: ${DB_PASSWORD}
+          UPLOAD_LIMIT: 102400000000
+      restart: always
+      ports:
+        - 8080:80
+      networks:
+        - database
+
