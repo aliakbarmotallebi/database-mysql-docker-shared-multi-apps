@@ -6,14 +6,15 @@ networks:
 services:
   #DB Mariadb
   mariadb:
-    platform: linux/arm64
-    image: mariadb:10.9
+    platform
+    image: mariadb:latest
     container_name: mariadb
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - 3306:3306
     networks:
@@ -23,7 +24,7 @@ services:
 
   #PHPMYADMIN Service
   phpmyadmin:
-    image: phpmyadmin:5.2.2
+    image: phpmyadmin/phpmyadmin:latest
     environment:
       PMA_HOST: mariadb
       PMA_USER: ${DB_USERNAME}
